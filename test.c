@@ -1,7 +1,16 @@
 #include <stdio.h>
 void main()
 {
-    char *ch[100];
-    gets(ch);
-    printf("%s",ch);
+    int i=2;
+    int b = (1,2);
+    if (i==b)
+    {
+        printf("Hi");
+    }
+    else
+    {
+        printf("No");
+    }
+    
+    
 }
