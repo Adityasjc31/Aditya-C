@@ -62,7 +62,6 @@ void prims(int **cost, int nodes)
         visited[x] = 0;
     }
     printf("Edge\tWeight\n");
-    int OVER = 0;
     x = 0;
     int NUMBEROFPRINTS = 1;
     visited[0] = cost[0][(minElementIndex(cost[0], nodes, -1))];
