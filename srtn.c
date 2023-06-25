@@ -36,6 +36,52 @@ void sortIndex(int *sort_ar, int start, int end, char *rest1, int *rest2)
     }
 }
 
+void sortChar(char *sort_ar, int *rest1, int *rest2, int *rest3, int *rest4, int size)
+{
+    int x, y, index, temp;
+    char temp1;
+
+    for (x = 0; x < size; x++)
+    {
+        index = x;
+        for (y = x + 1; y < size; y++)
+        {
+            if (sort_ar[y] < sort_ar[index])
+            {
+                index = y;
+            }
+        }
+        temp = sort_ar[index];
+        sort_ar[index] = sort_ar[x];
+        sort_ar[x] = temp;
+
+        if (rest1 != NULL)
+        {
+            temp1 = rest1[index];
+            rest1[index] = rest1[x];
+            rest1[x] = temp1;
+        }
+        if (rest2 != NULL)
+        {
+            temp = rest2[index];
+            rest2[index] = rest2[x];
+            rest2[x] = temp;
+        }
+        if (rest3 != NULL)
+        {
+            temp = rest3[index];
+            rest3[index] = rest3[x];
+            rest3[x] = temp;
+        }
+        if (rest4 != NULL)
+        {
+            temp = rest4[index];
+            rest4[index] = rest2[x];
+            rest4[x] = temp;
+        }
+    }
+}
+
 void sort(int *sort_ar, char *rest1, int *rest2, int sort_size)
 {
     sortIndex(sort_ar, 0, sort_size, rest1, rest2);
@@ -70,36 +116,37 @@ void srtn(char *pid, int *at, int *bt, int process)
     {
         bt_duplicate[x] = bt[x];
     }
-    printf("\n");
+    sort(at, pid, bt_duplicate, process);
+
     printf("Gantt chart : \n");
     for (x = 0; x < process;)
     {
-        if(bt_duplicate[x]==0)
+        if (bt_duplicate[x] == 0)
+        {
+            tt[(int)(pid[x] - 65)] = time - at[x];
             x++;
+        }
         lastpid = pid[x];
         time += 1;
         bt_duplicate[x]--;
-        
-        
-        sortIndex(bt_duplicate, (x-1)<0 ? 0  : x-1, time>process ? process : time, pid, at);
+        sortIndex(bt_duplicate, (x - 1) < 0 ? 0 : x - 1, (time + 1) > process ? process : (time == at[time] ? (time + 1) : time), pid, at);
 
-
-        if (pid[x] == lastpid && bt_duplicate[x]!=0)
+        if (pid[x] == lastpid && bt_duplicate[x] != 0)
         {
             continue;
         }
-        printf("%c:%d->\n", lastpid,time);
-
+        printf("%c:%d", lastpid, time);
+        if (x < process - 1)
+        {
+            printf("->");
+        }
     }
 
-    // wt[0] = 0;
-    // for (x = 1; x < process; x++)
-    // {
-    //     burst += bt[x - 1];
-    //     wt[x] = burst - at[x];
-    //     tt[x - 1] = bt[x - 1] + wt[x - 1];
-    // }
-    // tt[x - 1] = bt[x - 1] + wt[x - 1];
+    sortChar(pid, at, NULL, wt, NULL, process);
+    for (x = 0; x < process; x++)
+    {
+        wt[x] = tt[x]-bt[x];
+    }
 
     printf("\n");
 }
@@ -120,67 +167,60 @@ void main()
     wt = (int *)malloc(process * sizeof(int));
     tt = (int *)malloc(process * sizeof(int));
 
-    pid[0] = 'A';
-    pid[1] = 'B';
-    pid[2] = 'C';
-    pid[3] = 'D';
-    pid[4] = 'E';
+    // pid[0] = 'A';
+    // pid[1] = 'B';
+    // pid[2] = 'C';
+    // pid[3] = 'D';
+    // pid[4] = 'E';
 
-    bt[0] = 6;
-    bt[1] = 2;
-    bt[2] = 8;
-    bt[3] = 3;
-    bt[4] = 4;
+    // bt[0] = 6;
+    // bt[1] = 2;
+    // bt[2] = 8;
+    // bt[3] = 3;
+    // bt[4] = 4;
 
-    at[0] = 2;
-    at[1] = 5;
-    at[2] = 1;
-    at[3] = 0;
-    at[4] = 4;
+    // at[0] = 2;
+    // at[1] = 5;
+    // at[2] = 1;
+    // at[3] = 0;
+    // at[4] = 4;
 
-    // printf("Enter pids : ");
-    // for (x = 0; x < process; x++)
-    // {
-    //     scanf("%c", &pid[x]);
-    //     scanf("%c", &pid[x]);
-    // }
+    printf("Enter pids : ");
+    for (x = 0; x < process; x++)
+    {
+        scanf("%c", &pid[x]);
+        scanf("%c", &pid[x]);
+    }
 
-    // for (x = 0; x < process; x++)
-    // {
-    //     printf("Enter arrival time of process id %c : ", pid[x]);
-    //     scanf("%d", &at[x]);
-    // }
+    for (x = 0; x < process; x++)
+    {
+        printf("Enter arrival time of process id %c : ", pid[x]);
+        scanf("%d", &at[x]);
+    }
 
-    // for (x = 0; x < process; x++)
-    // {
-    //     printf("Enter burst time of process id %c : ", pid[x]);
-    //     scanf("%d", &bt[x]);
-    // }
+    for (x = 0; x < process; x++)
+    {
+        printf("Enter burst time of process id %c : ", pid[x]);
+        scanf("%d", &bt[x]);
+    }
 
-    sort(at, pid, bt, process);
-    printf("PIDS : ");
-    printArrayChar(pid, process);
-    printf("Arrival array : ");
-    printArray(at, process);
-    printf("Burst array : ");
-    printArray(bt, process);
     srtn(pid, at, bt, process);
 
-    // for (x = 0;x < process;x++)
-    // {
-    //     avgwt += wt[x];
-    //     avgtt += tt[x];
-    // }
+    for (x = 0;x < process;x++)
+    {
+        avgwt += wt[x];
+        avgtt += tt[x];
+    }
 
-    // printf("Process Id\tArrival Time\tBurst Time\tWaiting time\tTurnaround time\n");
-    // for (x = 0;x < process;x++)
-    // {
-    //     printf("%c\t\t%d\t\t%d\t\t%d\t\t%d\n",pid[x],at[x],bt[x],wt[x],tt[x]);
-    // }
+    printf("Process Id\tArrival Time\tBurst Time\tWaiting time\tTurnaround time\n");
+    for (x = 0;x < process;x++)
+    {
+        printf("%c\t\t%d\t\t%d\t\t%d\t\t%d\n",pid[x],at[x],bt[x],wt[x],tt[x]);
+    }
 
-    // avgwt = avgwt/process;
-    // avgtt = avgtt/process;
+    avgwt = avgwt/process;
+    avgtt = avgtt/process;
 
-    // printf("Average waiting time : %.2f ",avgwt);
-    // printf("Average turnaround time : %.2f ",avgtt);
+    printf("Average waiting time : %.2f\n",avgwt);
+    printf("Average turnaround time : %.2f ",avgtt);
 }
