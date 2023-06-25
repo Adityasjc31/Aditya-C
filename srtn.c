@@ -158,8 +158,8 @@ void main()
     char *pid;
     int x;
     process = 5;
-    // printf("Enter number of process : ");
-    // scanf("%d", &process);
+    printf("Enter number of process : ");
+    scanf("%d", &process);
 
     pid = (char *)malloc(process * sizeof(char));
     at = (int *)malloc(process * sizeof(int));
