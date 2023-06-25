@@ -63,49 +63,43 @@ void printArrayChar(char *ar, int size)
 
 void srtn(char *pid, int *at, int *bt, int process)
 {
-    int x, y, burst = 0;
-    char lastprocess = '\000';
+    int x, time = 0;
+    char lastpid = '\000';
     int *bt_duplicate = (int *)malloc(process * sizeof(int));
     for (x = 0; x < process; x++)
     {
         bt_duplicate[x] = bt[x];
     }
-
-    printf("Gantt chart : ");
-    for (x = 0; x < process; x++)
+    printf("\n");
+    printf("Gantt chart : \n");
+    for (x = 0; x < process;)
     {
-        lastprocess = pid[x];
-        burst = bt_duplicate[x];
-        burst--;
-        bt_duplicate[x] = burst;
-        sortIndex(bt_duplicate, 0, process, pid, at);
+        if(bt_duplicate[x]==0)
+            x++;
+        lastpid = pid[x];
+        time += 1;
+        bt_duplicate[x]--;
+        
+        
+        sortIndex(bt_duplicate, (x-1)<0 ? 0  : x-1, time>process ? process : time, pid, at);
 
-        if (pid[x] == lastprocess && bt_duplicate[x] != 0)
+
+        if (pid[x] == lastpid && bt_duplicate[x]!=0)
         {
-            x--;
             continue;
         }
+        printf("%c:%d->\n", lastpid,time);
 
-        printf("PIDS : ");
-        printArrayChar(pid, process);
-        printf("Arrival array : ");
-        printArray(at, process);
-        printf("Burst array : ");
-        printArray(bt, process);
-        printf("Duplicate Burst array : ");
-        printArray(bt_duplicate, process);
-
-        printf("%c:%d->", pid[x], burst);
     }
 
-    wt[0] = 0;
-    for (x = 1; x < process; x++)
-    {
-        burst += bt[x - 1];
-        wt[x] = burst - at[x];
-        tt[x - 1] = bt[x - 1] + wt[x - 1];
-    }
-    tt[x - 1] = bt[x - 1] + wt[x - 1];
+    // wt[0] = 0;
+    // for (x = 1; x < process; x++)
+    // {
+    //     burst += bt[x - 1];
+    //     wt[x] = burst - at[x];
+    //     tt[x - 1] = bt[x - 1] + wt[x - 1];
+    // }
+    // tt[x - 1] = bt[x - 1] + wt[x - 1];
 
     printf("\n");
 }
@@ -133,7 +127,7 @@ void main()
     pid[4] = 'E';
 
     bt[0] = 6;
-    bt[1] = 3;
+    bt[1] = 2;
     bt[2] = 8;
     bt[3] = 3;
     bt[4] = 4;
@@ -143,13 +137,6 @@ void main()
     at[2] = 1;
     at[3] = 0;
     at[4] = 4;
-
-    printf("PIDS : ");
-    printArrayChar(pid, process);
-    printf("Arrival array : ");
-    printArray(at, process);
-    printf("Burst array : ");
-    printArray(bt, process);
 
     // printf("Enter pids : ");
     // for (x = 0; x < process; x++)
@@ -171,6 +158,12 @@ void main()
     // }
 
     sort(at, pid, bt, process);
+    printf("PIDS : ");
+    printArrayChar(pid, process);
+    printf("Arrival array : ");
+    printArray(at, process);
+    printf("Burst array : ");
+    printArray(bt, process);
     srtn(pid, at, bt, process);
 
     // for (x = 0;x < process;x++)
