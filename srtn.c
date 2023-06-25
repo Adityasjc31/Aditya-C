@@ -36,7 +36,7 @@ void sortIndex(int *sort_ar, int start, int end, char *rest1, int *rest2)
     }
 }
 
-void sortChar(char *sort_ar, int *rest1, int *rest2, int *rest3, int *rest4, int size)
+void sortChar(char *sort_ar, int *rest1, int *rest2, int size)
 {
     int x, y, index, temp;
     char temp1;
@@ -66,18 +66,6 @@ void sortChar(char *sort_ar, int *rest1, int *rest2, int *rest3, int *rest4, int
             temp = rest2[index];
             rest2[index] = rest2[x];
             rest2[x] = temp;
-        }
-        if (rest3 != NULL)
-        {
-            temp = rest3[index];
-            rest3[index] = rest3[x];
-            rest3[x] = temp;
-        }
-        if (rest4 != NULL)
-        {
-            temp = rest4[index];
-            rest4[index] = rest2[x];
-            rest4[x] = temp;
         }
     }
 }
@@ -142,7 +130,7 @@ void srtn(char *pid, int *at, int *bt, int process)
         }
     }
 
-    sortChar(pid, at, NULL, wt, NULL, process);
+    sortChar(pid, at,wt, process);
     for (x = 0; x < process; x++)
     {
         wt[x] = tt[x]-bt[x];
