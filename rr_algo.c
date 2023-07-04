@@ -134,10 +134,10 @@ void main()
     char *pid;
     int x;
 
-    // printf("Enter number of process : ");
-    // scanf("%d",&process);
-    // printf("Enter quantum : ");
-    // scanf("%d",&quanta);
+    printf("Enter number of process : ");
+    scanf("%d",&process);
+    printf("Enter quantum : ");
+    scanf("%d",&quanta);
 
     pid = (char *)malloc(process * sizeof(char));
     at = (int *)malloc(process * sizeof(int));
@@ -145,38 +145,38 @@ void main()
     wt = (int *)malloc(process * sizeof(int));
     tt = (int *)malloc(process * sizeof(int));
 
-    pid[0] = 'A';
-    pid[1] = 'B';
-    pid[2] = 'C';
-    pid[3] = 'D';
+    // pid[0] = 'A';
+    // pid[1] = 'B';
+    // pid[2] = 'C';
+    // pid[3] = 'D';
 
-    bt[0] = 4;
-    bt[1] = 7;
-    bt[2] = 2;
-    bt[3] = 2;
+    // bt[0] = 4;
+    // bt[1] = 7;
+    // bt[2] = 2;
+    // bt[3] = 2;
 
-    at[0] = 0;
-    at[1] = 2;
-    at[2] = 3;
-    at[3] = 3;
+    // at[0] = 0;
+    // at[1] = 2;
+    // at[2] = 3;
+    // at[3] = 3;
     // printf("Enter pids : ");
-    // for (x = 0;x < process;x++)
-    // {
-    //     scanf("%c",&pid[x]);
-    //     scanf("%c",&pid[x]);
-    // }
+    for (x = 0;x < process;x++)
+    {
+        scanf("%c",&pid[x]);
+        scanf("%c",&pid[x]);
+    }
 
-    // for(x = 0 ;x<process;x++)
-    // {
-    //     printf("Enter arrival time of process id %c : ",pid[x]);
-    //     scanf("%d",&at[x]);
-    // }
+    for(x = 0 ;x<process;x++)
+    {
+        printf("Enter arrival time of process id %c : ",pid[x]);
+        scanf("%d",&at[x]);
+    }
 
-    // for(x = 0 ;x<process;x++)
-    // {
-    //     printf("Enter burst time of process id %c : ",pid[x]);
-    //     scanf("%d",&bt[x]);
-    // }
+    for(x = 0 ;x<process;x++)
+    {
+        printf("Enter burst time of process id %c : ",pid[x]);
+        scanf("%d",&bt[x]);
+    }
 
     sort(at, pid, bt, process);
     rr(pid, at, bt, process);
