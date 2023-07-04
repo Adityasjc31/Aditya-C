@@ -232,7 +232,7 @@ void main()
     for (x = 0; x < process; x++)
     {
         printf("Enter priorty of process id %c : ", pid[x]);
-        scanf("%d", &bt[x]);
+        scanf("%d", &pr[x]);
     }
 
     priority(pid, at, bt, pr, process);
@@ -243,10 +243,10 @@ void main()
         avgtt += tt[x];
     }
 
-    printf("Process Id\tArrival Time\tBurst Time\tWaiting time\tTurnaround time\n");
-    for (x = 0; x < process; x++)
+    printf("Process Id\tArrival Time\tBurst Time\tPriority\tWaiting time\tTurnaround time\n");
+    for (x = 0;x < process;x++)
     {
-        printf("%c\t\t%d\t\t%d\t\t%d\t\t%d\n", pid[x], at[x], bt[x], wt[x], tt[x]);
+        printf("%c\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",pid[x],at[x],bt[x],pr[x],wt[x],tt[x]);
     }
 
     avgwt = avgwt / process;
